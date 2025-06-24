@@ -2,7 +2,7 @@ name: Daily Investment News
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 7:00 AM Bangkok
+    - cron: '0 0 * * *'  # รันทุกวัน 7:00 AM เวลาไทย (UTC+7)
   workflow_dispatch:
 
 jobs:
@@ -13,8 +13,10 @@ jobs:
       EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
       EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
       EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+
     steps:
       - uses: actions/checkout@v4
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -22,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install requests beautifulsoup4 openai
 
       - name: Run script
         run: python news_investment.py
